@@ -27,12 +27,13 @@
 <main>
   {#if contributionData}
     <div class="contribution-graph">
-      {#each Object.values(contributionData) as contributions, i}
+      {#each Object.entries(contributionData) as [date, contributions]}
         <div
           class="contribution-cell"
           style="background-color: {getColor(contributions)}"
         >
-          <span class="tooltiptext">{contributions}</span>
+          <span class="tooltiptext">{contributions} contributions</span>
+          <span class="tooltiptextDate">{date}</span>
         </div>
       {/each}
     </div>
@@ -47,16 +48,18 @@
     flex-wrap: wrap;
     width: 100%;
   }
+
   .contribution-cell {
     width: calc(100% / 51);
-    height: 20px;
+    height: 40px;
     border: 1px solid #ddd;
     position: relative;
   }
-  .tooltiptext {
+
+  .tooltiptext, .tooltiptextDate {
     visibility: hidden;
     width: 120px;
-    background-color: #555;
+    background-color: #000; 
     color: #fff;
     text-align: center;
     border-radius: 6px;
@@ -69,7 +72,11 @@
     opacity: 0;
     transition: opacity 0.3s;
   }
-  .contribution-cell:hover .tooltiptext {
+ .tooltiptextDate {
+    bottom: 50%;
+  }
+
+  .contribution-cell:hover .tooltiptext, .contribution-cell:hover .tooltiptextDate {
     visibility: visible;
     opacity: 1;
   }
